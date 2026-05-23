@@ -5,7 +5,7 @@
 #include <linux/gpio/consumer.h>
 #include <linux/regulator/consumer.h>
 #include <linux/delay.h>
-#include <linux/of_device.h>
+#include <linux/of.h>
 #include <linux/module.h>
 #include <video/mipi_display.h>
 
@@ -400,7 +400,6 @@ disable_iovcc:
 static int cwu50_unprepare(struct drm_panel *panel)
 {
 	struct cwu50 *ctx = panel_to_cwu50(panel);
-	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
 	int err;
 
 	if (!ctx->prepared)
@@ -420,8 +419,6 @@ static int cwu50_unprepare(struct drm_panel *panel)
 static int cwu50_disable(struct drm_panel *panel)
 {
 	struct cwu50 *ctx = panel_to_cwu50(panel);
-	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
-	int err;
 
 	if (!ctx->enabled)
 		return 0;
@@ -438,7 +435,6 @@ static int cwu50_disable(struct drm_panel *panel)
 static int cwu50_prepare(struct drm_panel *panel)
 {
 	struct cwu50 *ctx = panel_to_cwu50(panel);
-	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
 	int err;
 
 	if (ctx->prepared)
