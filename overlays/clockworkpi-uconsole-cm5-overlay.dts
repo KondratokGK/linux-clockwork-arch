@@ -266,12 +266,4 @@
 			};
 		};
 	};
-
-	/* ===== Disable builtin Ethernet alias (not present on uConsole) ===== */
-	fragment@6 {
-		target-path = "ethernet0";
-		__overlay__ {
-			status = "disabled";
-		};
-	};
 };
