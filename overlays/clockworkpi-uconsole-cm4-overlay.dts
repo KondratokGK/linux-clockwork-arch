@@ -217,6 +217,11 @@
 	};
 
 	__overrides__ {
+		batt_charge_curr = <&battery>,"constant-charge-current-max-microamp:0";
+		batt_volt_max = <&battery>,"voltage-max-design-microvolt:0";
+		batt_volt_recharge = <&battery>,"re-charge-voltage-microvolt:0";
+		batt_volt_min = <&battery>,"voltage-min-design-microvolt:0";
+
 		batt_uah = <&battery>,"charge-full-design-microamp-hours:0";
 		vnom_uv  = <&battery>,"nominal-microvolt:0";
 	};
