@@ -24,7 +24,7 @@ source=("linux-$pkgver-${_commit:0:10}.tar.gz::https://github.com/raspberrypi/li
 md5sums=('3a164f980645fe23b34646c08be76c70'
          'e46eff7b6e8682b472459355e26ed645'
          '71ba2c5e8ef21ca87933a53984b34067'
-         '2d053b8b28ddbef1ae56b047d147f174'
+         '2d1eb1f806ceb063595528956071ef57'
          '1ff6d6db9da2ad041b066c6c6ee20b22'
          'd1c4dcfe154312542a7629e6fe3a1d6d'
          '5019cc9c926c7300ce46999beb3be5c8')
