@@ -1,7 +1,7 @@
 _commit=c2ad96e1f0a8e5f6b4fab8cfd4534b115eb83394
 _srcname=linux-${_commit}
 pkgver=7.0.9
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux'
 url="https://github.com/raspberrypi/linux"
 arch=(aarch64)
@@ -46,8 +46,13 @@ case "$MODEL" in
     _defconfig="bcm2712_defconfig"
     _localver="-cm5"
     ;;
+  cm5-4k)
+    pkgbase="${_pkgbase_root}-cm5"
+    _defconfig="bcm2712_defconfig"
+    _localver="-cm5-4k"
+    ;;
   *)
-    echo "Unknown MODEL='$MODEL' (use: cm4 | cm5)" >&2
+    echo "Unknown MODEL='$MODEL' (use: cm4 | cm5 | cm5-4k)" >&2
     exit 2
     ;;
 esac
@@ -58,6 +63,13 @@ _kernel="kernel8-${MODEL}.img" KARCH=arm64 _image=Image
 
 prepare() {
   cd "${srcdir}/${_srcname}"
+  
+  # apply 4k patch
+  if [[ "$MODEL" == "cm5-4k" ]]; then
+    cp "${srcdir}/patches/bcm2712_defconfig.patch-4k" "${srcdir}/patches/bcm2712_defconfig.patch"
+  else
+    cp "${srcdir}/patches/bcm2712_defconfig.patch-16k" "${srcdir}/patches/bcm2712_defconfig.patch"
+  fi
 
   # apply patches
   for patch in "$srcdir"/patches/*.patch; do
@@ -147,7 +159,7 @@ _package() {
   install -m644 ../cmdline.txt "${pkgdir}/boot"
 
   # CM5-only: brcmfmac workarounds via modprobe.d
-  if [[ "$MODEL" == "cm5" ]]; then
+  if [[ "$MODEL" == "cm5" || "$MODEL" == "cm5-4k" ]]; then
     echo "options brcmfmac roamoff=1 feature_disable=0x282000" |
       install -Dm644 /dev/stdin "${pkgdir}/usr/lib/modprobe.d/99-brcmfmac-cm5.conf"
   fi

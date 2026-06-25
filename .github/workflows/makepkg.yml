@@ -23,6 +23,7 @@ jobs:
         include:
           - model: cm4
           - model: cm5
+          - model: cm5-4k
 
     steps:
       - name: Checkout sources
@@ -94,6 +95,12 @@ jobs:
           name: kernel-cm5-pkgs
           path: cm5
 
+      - name: Download CM5-4k artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: kernel-cm5-4k-pkgs
+          path: cm5-4k
+
       - name: Create release and upload assets
         uses: softprops/action-gh-release@v2
         with:
@@ -107,3 +114,6 @@ jobs:
             cm4/SHA256SUMS
             cm5/*.pkg.tar.xz
             cm5/SHA256SUMS
+            cm5-4k/*.pkg.tar.xz
+            cm5-4k/SHA256SUMS
+
